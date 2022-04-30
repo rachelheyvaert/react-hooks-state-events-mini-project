@@ -1,11 +1,31 @@
+
+ 
+ 
+ 
 import React from "react";
-
-function TaskList() {
-  return (
-    <div className="tasks">
-      {/* display a list of tasks using Task component */}
-    </div>
-  );
+import Task from "./Task"
+ 
+function TaskList(props) {
+ function deleteTask(event){
+   let selectedTaskText = event.target.parentElement.children[1].innerText
+   let filteredTasks = props.tasks.filter(task => {
+     return task.text !== selectedTaskText
+   })
+   props.setTasks(filteredTasks)
+    }
+ 
+function renderTasks() {
+ return props.tasks.map(task => {
+    return(
+      <Task key={task.text} text={task.text} category={task.category} deleteTask={deleteTask} />
+    )
+  })
 }
-
+ return (
+   <div className="tasks">
+     {renderTasks()}
+   </div>
+ );
+}
+ 
 export default TaskList;
